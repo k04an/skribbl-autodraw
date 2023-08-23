@@ -1,5 +1,6 @@
 const Jimp = require('jimp')
 const logger = require('./logger')
+const config = require('./config')
 const moduleName = 'Image processor'
 
 module.exports = {
@@ -7,8 +8,7 @@ module.exports = {
         logger.log('New image processing request', moduleName)
         logger.log('Reading image...', moduleName)
         let img = await Jimp.read(imgBuffer)
-        img.write('img.png')
-        let pixelLevel = Math.round(img.getWidth() / 80)
+        let pixelLevel = Math.round(img.getWidth() / config.pixelateLevel)
 
         logger.log('Pixelating image...', moduleName)
         await img.pixelate(pixelLevel, 0, 0, img.getWidth(), img.getHeight())
